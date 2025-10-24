@@ -5,7 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
 		<version>3.5.5</version>
+=======
+		<version>3.4.10</version>
+>>>>>>> 48489ff (desacoplando usuarios)
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.amaru</groupId>
@@ -29,6 +33,10 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+<<<<<<< HEAD
+=======
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
+>>>>>>> 48489ff (desacoplando usuarios)
 	</properties>
 	<dependencies>
 		<dependency>
@@ -61,7 +69,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
+=======
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-spring-boot3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+        <dependency>
+>>>>>>> 48489ff (desacoplando usuarios)
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 			<version>1.6.3</version>
@@ -97,6 +118,14 @@
 			<artifactId>openpdf</artifactId>
 			<version>2.0.0</version>
 		</dependency>
+<<<<<<< HEAD
+=======
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <version>5.0.0-M4</version>
+        </dependency>
+>>>>>>> 48489ff (desacoplando usuarios)
 		<dependency>
 			<groupId>com.google.zxing</groupId>
 			<artifactId>core</artifactId>
@@ -113,10 +142,28 @@
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 	</dependencies>
+<<<<<<< HEAD
 
 
 
 	<build>
+=======
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+
+    <build>
+>>>>>>> 48489ff (desacoplando usuarios)
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

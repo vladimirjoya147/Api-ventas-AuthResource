@@ -15,6 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtDecoders;
+<<<<<<< HEAD
+=======
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+>>>>>>> 48489ff (desacoplando usuarios)
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -25,6 +29,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+<<<<<<< HEAD
 
 @Configuration
 @EnableWebSecurity
@@ -33,21 +38,40 @@ public class SecurityConfig {
 
     @Value("${spring.security.oauth2.resourceserver.jwt.issuer-uri:http://localhost:9000}")
     private String issuerUri;
+=======
+import static org.springframework.security.oauth2.jwt.NimbusJwtDecoder.withJwkSetUri;
+
+
+@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
+public class SecurityConfig {
+
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    private String jwkSetUri;
+>>>>>>> 48489ff (desacoplando usuarios)
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+<<<<<<< HEAD
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+=======
+                /*.cors(cors -> cors.configurationSource(corsConfigurationSource()))*/
+>>>>>>> 48489ff (desacoplando usuarios)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/public/**"
+<<<<<<< HEAD
                                /* "/actuator/health",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"    */
+=======
+>>>>>>> 48489ff (desacoplando usuarios)
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
@@ -79,7 +103,11 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() {
+<<<<<<< HEAD
         return JwtDecoders.fromIssuerLocation(issuerUri);
+=======
+        return withJwkSetUri(jwkSetUri).build();
+>>>>>>> 48489ff (desacoplando usuarios)
     }
 
     @Bean

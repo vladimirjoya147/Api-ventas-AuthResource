@@ -44,9 +44,14 @@ public class MovimientoInventario {
     @Column(name = "fecha", nullable = false, updatable = false)
     private LocalDateTime fecha;
 
+<<<<<<< HEAD
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario", nullable = false)
     private Usuario usuario;
+=======
+    @Column(name = "id_usuario", nullable = false)
+    private Long usuarioId;
+>>>>>>> 48489ff (desacoplando usuarios)
 
     @Column(name = "referencia_id")
     private Integer referenciaId;

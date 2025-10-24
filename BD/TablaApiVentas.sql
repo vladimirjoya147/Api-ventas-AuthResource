@@ -2,26 +2,15 @@
 CREATE DATABASE IF NOT EXISTS venta_sistema;
 USE venta_sistema;
 
+CREATE DATABASE IF NOT EXISTS venta_sistema2;
+USE venta_sistema2;
+
 CREATE TABLE IF NOT EXISTS roles (
   id_rol int NOT NULL AUTO_INCREMENT,
   nombre_rol varchar(50) NOT NULL COMMENT 'Ej: Administrador, Cajero, Almacenista',
   PRIMARY KEY (id_rol),
   UNIQUE KEY nombre_rol (nombre_rol)
 ) ;
-
-CREATE TABLE IF NOT EXISTS usuarios (
-  id_usuario int NOT NULL AUTO_INCREMENT,
-  nombre_completo varchar(100) NOT NULL,
-  username varchar(50) NOT NULL,
-  password varchar(255) NOT NULL COMMENT 'Guardar siempre contraseñas hasheadas',
-  id_rol int NOT NULL,
-  moneda varchar(5) NOT NULL DEFAULT '$' COMMENT 'Símbolo de la moneda preferida',
-  activo tinyint NOT NULL DEFAULT 1,
-  fecha_creacion timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (id_usuario),
-  UNIQUE KEY username (username),
-  FOREIGN KEY (id_rol) REFERENCES roles (id_rol)
-);
 
 -- Volcando estructura para permisos
 CREATE TABLE IF NOT EXISTS permisos (
@@ -108,8 +97,7 @@ CREATE TABLE IF NOT EXISTS movimientos_inventario (
   id_usuario int NOT NULL,
   referencia_id int DEFAULT NULL COMMENT 'ID de la venta, compra o ajuste relacionado',
   PRIMARY KEY (id_movimiento),
-  FOREIGN KEY (id_producto) REFERENCES productos (id_producto),
-  FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+  FOREIGN KEY (id_producto) REFERENCES productos (id_producto)
 );
 
 CREATE TABLE IF NOT EXISTS ventas (
@@ -121,8 +109,7 @@ CREATE TABLE IF NOT EXISTS ventas (
   metodo_pago enum('EFECTIVO','TARJETA_CREDITO','TARJETA_DEBITO','TRANSFERENCIA') NOT NULL,
   estado enum('COMPLETADA','ANULADA') NOT NULL DEFAULT 'COMPLETADA',
   PRIMARY KEY (id_venta),
-  FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente),
-  FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario)
+  FOREIGN KEY (id_cliente) REFERENCES clientes (id_cliente)
 );
 
 -- tabla detalle_ventas
@@ -143,11 +130,6 @@ INSERT INTO roles (id_rol, nombre_rol) VALUES
 	(2, 'Cajero'),
 	(3, 'Almacenista');
 
--- usuarios----------------
-INSERT INTO usuarios (id_usuario, nombre_completo, username, password, id_rol, moneda, activo, fecha_creacion) VALUES
-	(1, 'Admin Principal', 'admin', '$2y$10$k0gwlD7F58RahqKBUnuexOTpJLAjFXOTC8tnxNRE3UmGWqu310ETq', 1, 'S/', 1, '2025-08-26 07:40:26'),
-	(2, 'Carlos', 'cajero1', '$2y$10$Fjd9PBy.jgiLOxElm5FwNOrXPXSkikDKRLgwYhniq.YJClRYzFz9i', 2, '$', 1, '2025-08-28 15:27:06');
-    
 -- datos para la tabla permisos:------------------
 INSERT INTO permisos (id_permiso, nombre_permiso, descripcion) VALUES
 	(1, 'dashboard_ver', 'Acceso al dashboard principal'),

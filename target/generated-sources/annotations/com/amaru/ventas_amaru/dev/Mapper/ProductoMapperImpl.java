@@ -11,13 +11,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2025-10-12T22:32:09-0500",
+    date = "2025-10-24T02:25:41-0500",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
-=======
-    date = "2025-10-23T16:26:19-0500",
-    comments = "version: 1.6.3, compiler: javac, environment: Java 17.0.9 (Oracle Corporation)"
->>>>>>> 48489ff (desacoplando usuarios)
 )
 public class ProductoMapperImpl implements ProductoMapper {
 

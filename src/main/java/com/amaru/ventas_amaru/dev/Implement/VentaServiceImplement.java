@@ -1,22 +1,14 @@
 package com.amaru.ventas_amaru.dev.Implement;
 
-<<<<<<< HEAD
-=======
 import com.amaru.ventas_amaru.dev.DTO.Usuario.UsuarioRequest;
->>>>>>> 48489ff (desacoplando usuarios)
 import com.amaru.ventas_amaru.dev.DTO.VentaDTO.*;
 import com.amaru.ventas_amaru.dev.Entity.Cliente;
 import com.amaru.ventas_amaru.dev.Entity.ProductoEntity.MovimientoInventario;
 import com.amaru.ventas_amaru.dev.Entity.VentaEntity.DetalleVenta;
 import com.amaru.ventas_amaru.dev.Entity.ProductoEntity.Producto;
-import com.amaru.ventas_amaru.dev.Entity.UsuarioEntity.Usuario;
 import com.amaru.ventas_amaru.dev.Entity.VentaEntity.Venta;
 import com.amaru.ventas_amaru.dev.Enum.TipoMovimiento;
-<<<<<<< HEAD
-=======
 import com.amaru.ventas_amaru.dev.Feign.UsuariosFeignClient;
->>>>>>> 48489ff (desacoplando usuarios)
-import com.amaru.ventas_amaru.dev.Mapper.VentaDetalle;
 import com.amaru.ventas_amaru.dev.Mapper.VentaMapper;
 import com.amaru.ventas_amaru.dev.Repository.*;
 import com.amaru.ventas_amaru.dev.Service.VentaService;
@@ -32,14 +24,9 @@ import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
->>>>>>> 48489ff (desacoplando usuarios)
-
-import static com.amaru.ventas_amaru.dev.Mapper.DetalleMapper.mapper;
 import static com.amaru.ventas_amaru.dev.Mapper.VentaDetalle.listarVentasMap;
 
 @Service
@@ -48,19 +35,6 @@ public class VentaServiceImplement implements VentaService {
     private final VentaRepository ventaRepository;
     private final VentaDetalleRepository ventaDetalleRepository;
     private final ProductoRepository productoRepository;
-<<<<<<< HEAD
-    private final UsuarioRepository usuarioRepository;
-    private final ClienteRepository clienteRepository;
-    private final MovimientoRepository movimientoRepository;
-
-    public VentaServiceImplement(VentaRepository ventaRepository, VentaDetalleRepository ventaDetalleRepository, ProductoRepository productoRepository, UsuarioRepository usuarioRepository, ClienteRepository clienteRepository, MovimientoRepository movimientoRepository) {
-        this.ventaRepository = ventaRepository;
-        this.ventaDetalleRepository = ventaDetalleRepository;
-        this.productoRepository = productoRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.clienteRepository = clienteRepository;
-        this.movimientoRepository = movimientoRepository;
-=======
     private final ClienteRepository clienteRepository;
     private final MovimientoRepository movimientoRepository;
     private final UsuariosFeignClient usuariosFeignClient;
@@ -72,16 +46,12 @@ public class VentaServiceImplement implements VentaService {
         this.clienteRepository = clienteRepository;
         this.movimientoRepository = movimientoRepository;
         this.usuariosFeignClient = usuariosFeignClient;
->>>>>>> 48489ff (desacoplando usuarios)
     }
 
 
     @Override
     public List<VentaListaDTO> listarVentas() {
-<<<<<<< HEAD
-        List<Venta> lista = ventaRepository.findAll();
-        return lista.stream().map(VentaMapper::toDTO).toList();
-=======
+
         List<Venta> ventas = ventaRepository.findAll();
 
         Set<Long> idsUsuarios = ventas.stream()
@@ -104,7 +74,6 @@ public class VentaServiceImplement implements VentaService {
                 })
                 .toList();
 
->>>>>>> 48489ff (desacoplando usuarios)
     }
 
     @Override
@@ -118,24 +87,16 @@ public class VentaServiceImplement implements VentaService {
         Cliente cliente = clienteRepository.findById(request.getIdCliente())
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con el id " + request.getIdCliente()));
 
-<<<<<<< HEAD
-        Usuario usuario = usuarioRepository.findById(request.getIdUsuario())
-                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con el id " + request.getIdUsuario()));
 
-        Venta venta = new Venta();
-        venta.setCliente(cliente);
-        venta.setUsuario(usuario);
-=======
         UsuarioRequest usuario = usuariosFeignClient.obtenerUsuarioPorId(request.getIdUsuario());
         System.out.printf("Usuario encontrado: %s\n", usuario.getNombreCompleto());
         System.out.println("Usuario encontrado: " + usuario.getId());;
-        System.out.println("id de venta " + request.getIdUsuario());
+
 
 
         Venta venta = new Venta();
         venta.setCliente(cliente);
         venta.setUsuarioId(usuario.getId());
->>>>>>> 48489ff (desacoplando usuarios)
         venta.setFechaVenta(LocalDateTime.now());
         venta.setMetodoPago(Venta.MetodoPago.valueOf(request.getMetodoPago()));
         venta.setTotalVenta(BigDecimal.ZERO);
@@ -174,12 +135,9 @@ public class VentaServiceImplement implements VentaService {
             movimiento.setStockAnterior(stockAnterior);
             movimiento.setCantidad(detalle.getCantidad());
             movimiento.setStockNuevo(stockNuevo);
-<<<<<<< HEAD
-            movimiento.setUsuario(usuario);
-=======
+
             movimiento.setUsuarioId(usuario.getId());
             //venta.setUsuarioId(usuario.getId());
->>>>>>> 48489ff (desacoplando usuarios)
             movimiento.setReferenciaId(ventaGuardada.getIdVenta());
             movimientoRepository.save(movimiento);
 
@@ -203,15 +161,7 @@ public class VentaServiceImplement implements VentaService {
         Venta venta = ventaRepository.findById(idVenta)
                 .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con el id " + idVenta));
 
-<<<<<<< HEAD
-        List<DetalleVenta> detalles = ventaDetalleRepository.findByVentaIdVenta(idVenta);
-        List<VentaMapDTO>listaDTO = listarVentasMap(detalles);
-        //List<VentaMapDTO> lista = detalles.stream().map(mapper::toDTO).toList();
-        return new VentaDetallesDTO(
-                venta.getIdVenta(),
-                venta.getCliente().getNombreCliente(),
-                venta.getUsuario().getNombreCompleto(),
-=======
+
         UsuarioRequest usuario = usuariosFeignClient.obtenerUsuarioPorId(venta.getUsuarioId());
 
 
@@ -222,7 +172,6 @@ public class VentaServiceImplement implements VentaService {
                 venta.getIdVenta(),
                 venta.getCliente().getNombreCliente(),
                 usuario.getNombreCompleto(),
->>>>>>> 48489ff (desacoplando usuarios)
                 venta.getFechaVenta(),
                 venta.getTotalVenta(),
                 venta.getMetodoPago().name(),
@@ -236,12 +185,8 @@ public class VentaServiceImplement implements VentaService {
         Venta venta = ventaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Venta no encontrada con el id " + id));
 
-<<<<<<< HEAD
-        Usuario usuario = usuarioRepository.findById(venta.getUsuario().getIdUsuario())
-                .orElseThrow(()->new EntityNotFoundException("No se encontro el usuario "+venta.getUsuario().getIdUsuario()));
-=======
         UsuarioRequest usuario = usuariosFeignClient.obtenerUsuarioPorId(venta.getUsuarioId());
->>>>>>> 48489ff (desacoplando usuarios)
+
 
         List<DetalleVenta> detalles = ventaDetalleRepository.findByVentaIdVenta(id);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -263,11 +208,7 @@ public class VentaServiceImplement implements VentaService {
 
         document.add(new Paragraph(" ")); // Espacio
         document.add(new Paragraph("Cliente: " + venta.getCliente().getNombreCliente()));
-<<<<<<< HEAD
-        document.add(new Paragraph("Vendedor: "+ venta.getUsuario().getNombreCompleto()));
-=======
         document.add(new Paragraph("Vendedor: "+ usuario.getNombreCompleto()));
->>>>>>> 48489ff (desacoplando usuarios)
         document.add(new Paragraph("Fecha: " + venta.getFechaVenta()));
         document.add(new Paragraph(" "));
 

@@ -7,17 +7,14 @@ import com.amaru.ventas_amaru.dev.DTO.ComprasDTO.DetalleComprasResponse;
 import com.amaru.ventas_amaru.dev.DTO.Usuario.UsuarioRequest;
 import com.amaru.ventas_amaru.dev.Entity.ProductoEntity.Producto;
 import com.amaru.ventas_amaru.dev.Entity.ProductoEntity.Proveedor;
-import com.amaru.ventas_amaru.dev.Entity.UsuarioEntity.Usuario;
 import com.amaru.ventas_amaru.dev.Feign.ComprasFeignCLient;
 import com.amaru.ventas_amaru.dev.Feign.UsuariosFeignClient;
 import com.amaru.ventas_amaru.dev.Repository.ProductoRepository;
 import com.amaru.ventas_amaru.dev.Repository.ProveedorRepository;
-import com.amaru.ventas_amaru.dev.Repository.UsuarioRepository;
 import com.amaru.ventas_amaru.dev.Service.ComprasService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

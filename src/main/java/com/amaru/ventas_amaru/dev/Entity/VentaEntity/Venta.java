@@ -1,7 +1,6 @@
 package com.amaru.ventas_amaru.dev.Entity.VentaEntity;
 
 import com.amaru.ventas_amaru.dev.Entity.Cliente;
-import com.amaru.ventas_amaru.dev.Entity.UsuarioEntity.Usuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,14 +24,9 @@ public class Venta {
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
 
-<<<<<<< HEAD
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "id_usuario", nullable = false)
-    private Usuario usuario;
-=======
+
     @Column(name = "id_usuario", nullable = false)
     private Long usuarioId;
->>>>>>> 48489ff (desacoplando usuarios)
 
     @Column(name = "fecha_venta", nullable = false, updatable = false)
     private LocalDateTime fechaVenta;

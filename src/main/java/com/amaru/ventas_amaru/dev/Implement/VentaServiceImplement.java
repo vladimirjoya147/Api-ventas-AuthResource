@@ -10,6 +10,7 @@ import com.amaru.ventas_amaru.dev.Entity.VentaEntity.Venta;
 import com.amaru.ventas_amaru.dev.Enum.TipoMovimiento;
 import com.amaru.ventas_amaru.dev.Feign.UsuariosFeignClient;
 import com.amaru.ventas_amaru.dev.Mapper.VentaMapper;
+import com.amaru.ventas_amaru.dev.Rabbit.MessageProducer;
 import com.amaru.ventas_amaru.dev.Repository.*;
 import com.amaru.ventas_amaru.dev.Service.VentaService;
 import com.lowagie.text.*;
@@ -38,14 +39,16 @@ public class VentaServiceImplement implements VentaService {
     private final ClienteRepository clienteRepository;
     private final MovimientoRepository movimientoRepository;
     private final UsuariosFeignClient usuariosFeignClient;
+    private final MessageProducer messageProducer;
 
-    public VentaServiceImplement(VentaRepository ventaRepository, VentaDetalleRepository ventaDetalleRepository, ProductoRepository productoRepository, ClienteRepository clienteRepository, MovimientoRepository movimientoRepository, UsuariosFeignClient usuariosFeignClient) {
+    public VentaServiceImplement(VentaRepository ventaRepository, VentaDetalleRepository ventaDetalleRepository, ProductoRepository productoRepository, ClienteRepository clienteRepository, MovimientoRepository movimientoRepository, UsuariosFeignClient usuariosFeignClient, MessageProducer messageProducer) {
         this.ventaRepository = ventaRepository;
         this.ventaDetalleRepository = ventaDetalleRepository;
         this.productoRepository = productoRepository;
         this.clienteRepository = clienteRepository;
         this.movimientoRepository = movimientoRepository;
         this.usuariosFeignClient = usuariosFeignClient;
+        this.messageProducer = messageProducer;
     }
 
 
@@ -147,6 +150,12 @@ public class VentaServiceImplement implements VentaService {
         }
         ventaGuardada.setTotalVenta(ventatotal);
         ventaRepository.save(ventaGuardada);
+
+        messageProducer.enviarEventoVenta(
+                ventatotal,
+                cliente.getNombreCliente(),
+                ventaGuardada.getFechaVenta().toString()
+        );
         return new VentaResponse(
                 venta.getIdVenta(),
                 venta.getFechaVenta(),

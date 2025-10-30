@@ -11,8 +11,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-24T02:25:41-0500",
-    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
+    date = "2025-10-30T01:56:24-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.44.0.v20251001-1143, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 public class ProductoMapperImpl implements ProductoMapper {
 
@@ -26,18 +26,18 @@ public class ProductoMapperImpl implements ProductoMapper {
 
         productoDTO.setCategoria( productoCategoriaNombre( producto ) );
         productoDTO.setProveedorPreferido( productoProveedorPreferidoNombreProveedor( producto ) );
-        productoDTO.setIdProducto( producto.getIdProducto() );
+        productoDTO.setActivo( producto.getActivo() );
         productoDTO.setCodigoBarra( producto.getCodigoBarra() );
-        productoDTO.setNombre( producto.getNombre() );
         productoDTO.setDescripcion( producto.getDescripcion() );
+        productoDTO.setFechaActualizacion( producto.getFechaActualizacion() );
+        productoDTO.setFechaCreacion( producto.getFechaCreacion() );
+        productoDTO.setIdProducto( producto.getIdProducto() );
+        productoDTO.setNombre( producto.getNombre() );
+        productoDTO.setPath( producto.getPath() );
         productoDTO.setPrecioCompra( producto.getPrecioCompra() );
         productoDTO.setPrecioVenta( producto.getPrecioVenta() );
         productoDTO.setStock( producto.getStock() );
         productoDTO.setStockMinimo( producto.getStockMinimo() );
-        productoDTO.setActivo( producto.getActivo() );
-        productoDTO.setFechaCreacion( producto.getFechaCreacion() );
-        productoDTO.setFechaActualizacion( producto.getFechaActualizacion() );
-        productoDTO.setPath( producto.getPath() );
 
         return productoDTO;
     }

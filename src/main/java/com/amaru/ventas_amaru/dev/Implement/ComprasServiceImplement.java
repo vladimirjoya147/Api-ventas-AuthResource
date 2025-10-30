@@ -38,7 +38,7 @@ public class ComprasServiceImplement implements ComprasService {
 
     @Override
     public List<ComprasResponse> listarCompras() {
-        List<ComprasRequest> compras = comprasFeignCLient.listarCompras();
+        List<ComprasRequest> compras = obtenerComprasConCircuitBreaker();
 
         Set<Integer> idProveedores = compras.stream()
                 .map(ComprasRequest::getIdProveedor)
@@ -75,6 +75,11 @@ public class ComprasServiceImplement implements ComprasService {
         return usuariosFeignClient.obtenerUsuariosPorId(ids);
     }
 
+    @CircuitBreaker(name = "reportServiceCircuit", fallbackMethod = "comprasFallback")
+    public List<ComprasRequest> obtenerComprasConCircuitBreaker() {
+        return comprasFeignCLient.listarCompras();
+    }
+
 
     @Override
     public List<DetalleComprasResponse> listarDetalleCompras(Integer idCompra) {
@@ -100,5 +105,10 @@ public class ComprasServiceImplement implements ComprasService {
         return ids.stream()
                 .map(id -> new UsuarioRequest(id, "Usuario no disponible"))
                 .toList();
+    }
+
+    public List<ComprasRequest> comprasFallback(Throwable ex) {
+        System.out.println("Report-Service no disponible: " + ex.getMessage());
+        return List.of();
     }
 }

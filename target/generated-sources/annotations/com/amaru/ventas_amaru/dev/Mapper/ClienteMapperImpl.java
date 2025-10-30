@@ -6,8 +6,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-24T02:25:41-0500",
-    comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
+    date = "2025-10-30T01:56:24-0500",
+    comments = "version: 1.6.3, compiler: Eclipse JDT (IDE) 3.44.0.v20251001-1143, environment: Java 21.0.8 (Eclipse Adoptium)"
 )
 public class ClienteMapperImpl implements ClienteMapper {
 
@@ -19,13 +19,13 @@ public class ClienteMapperImpl implements ClienteMapper {
 
         Cliente cliente = new Cliente();
 
+        cliente.setActivo( clienteDTO.getActivo() );
+        cliente.setDireccion( clienteDTO.getDireccion() );
+        cliente.setDocumentoIdentidad( clienteDTO.getDocumentoIdentidad() );
+        cliente.setEmail( clienteDTO.getEmail() );
         cliente.setIdCliente( clienteDTO.getIdCliente() );
         cliente.setNombreCliente( clienteDTO.getNombreCliente() );
-        cliente.setDocumentoIdentidad( clienteDTO.getDocumentoIdentidad() );
         cliente.setTelefono( clienteDTO.getTelefono() );
-        cliente.setEmail( clienteDTO.getEmail() );
-        cliente.setDireccion( clienteDTO.getDireccion() );
-        cliente.setActivo( clienteDTO.getActivo() );
 
         return cliente;
     }
@@ -38,13 +38,13 @@ public class ClienteMapperImpl implements ClienteMapper {
 
         ClienteDTO clienteDTO = new ClienteDTO();
 
+        clienteDTO.setActivo( cliente.getActivo() );
+        clienteDTO.setDireccion( cliente.getDireccion() );
+        clienteDTO.setDocumentoIdentidad( cliente.getDocumentoIdentidad() );
+        clienteDTO.setEmail( cliente.getEmail() );
         clienteDTO.setIdCliente( cliente.getIdCliente() );
         clienteDTO.setNombreCliente( cliente.getNombreCliente() );
-        clienteDTO.setDocumentoIdentidad( cliente.getDocumentoIdentidad() );
         clienteDTO.setTelefono( cliente.getTelefono() );
-        clienteDTO.setEmail( cliente.getEmail() );
-        clienteDTO.setDireccion( cliente.getDireccion() );
-        clienteDTO.setActivo( cliente.getActivo() );
 
         return clienteDTO;
     }
